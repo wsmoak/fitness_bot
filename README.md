@@ -1,24 +1,18 @@
 # FitnessBot
 
-**TODO: Add description**
+Slack bot inspired by https://github.com/brandonshin/slackbot-workout
+
+At intervals, it calls out a random exercise for a random person in the #fitness channel.
+
+## References
+
+* http://blog.plataformatec.com.br/2015/10/mocks-and-explicit-contracts/
+* https://api.slack.com/methods/channels.info
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+clone the git repo
 
-  1. Add `fitness_bot` to your list of dependencies in `mix.exs`:
+configure environment variables
 
-    ```elixir
-    def deps do
-      [{:fitness_bot, "~> 0.0.1"}]
-    end
-    ```
-
-  2. Ensure `fitness_bot` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:fitness_bot]]
-    end
-    ```
-
+iex -S mix
