@@ -2,6 +2,7 @@ defmodule FitnessBot.SlackClient do
   use HTTPoison.Base
 
   @slack_api "https://slack.com/api"
+  @token Application.get_env(:fitness_bot, :slack_user_token)
 
   def get_channel_id_by_channel_name(channel_name) do
     response = list_channels()
@@ -19,10 +20,9 @@ defmodule FitnessBot.SlackClient do
   end
 
   def list_channels() do
-    token = System.get_env("SLACK_USER_TOKEN_STRING")
     endpoint = "channels.list"
 
-    url = @slack_api<>"/"<>endpoint<>"?token="<>token
+    url = @slack_api<>"/"<>endpoint<>"?token="<>@token
 
     get!(url)
   end
@@ -38,10 +38,9 @@ defmodule FitnessBot.SlackClient do
   end
 
   def get_user_info(user_id) do
-    token = System.get_env("SLACK_USER_TOKEN_STRING")
     endpoint = "users.info"
 
-    url = @slack_api<>"/"<>endpoint<>"?token="<>token<>"&user="<>user_id
+    url = @slack_api<>"/"<>endpoint<>"?token="<>@token<>"&user="<>user_id
 
     get!(url)
   end
