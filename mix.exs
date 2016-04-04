@@ -7,6 +7,7 @@ defmodule FitnessBot.Mixfile do
      elixir: "~> 1.3-dev",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     elixirc_paths: elixirc_paths(Mix.env),
      deps: deps]
   end
 
@@ -17,6 +18,9 @@ defmodule FitnessBot.Mixfile do
     [applications: [:logger, :httpoison],
      mod: {FitnessBot, []}]
   end
+
+  defp elixirc_paths(:dev), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Dependencies can be Hex packages:
   #

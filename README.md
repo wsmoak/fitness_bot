@@ -8,6 +8,7 @@ At intervals, it calls out a random exercise for a random person in the #fitness
 
 * http://blog.plataformatec.com.br/2015/10/mocks-and-explicit-contracts/
 * https://api.slack.com/methods/channels.info
+* https://groups.google.com/forum/#!topic/elixir-lang-talk/LqSYkKBkx1U
 
 ## Installation
 
