@@ -9,7 +9,7 @@ defmodule FitnessBot.Worker do
 
   @channel "fitness"
 
-  @exercises ["10 PUSHUPS", "60 SECOND WALL SIT", "20 JUMPING JACKS", "20 CRUNCHES", "30 SECOND PLANK"]
+  @exercises ["10 PUSHUPS", "60 SECOND WALL SIT", "20 JUMPING JACKS", "20 CRUNCHES", "30 SECOND PLANK", "15 AIR SQUATS"]
 
   ## Client API
 
