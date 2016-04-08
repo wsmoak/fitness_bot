@@ -36,7 +36,7 @@ defmodule FitnessBot.Worker do
     exercise = Enum.at(@exercises, exercise_selection)
 
     exercise_msg = "#{exercise} RIGHT NOW @#{user_name}"
-    Logger.debug exercise_msg
+    Logger.info exercise_msg
     @slackbot_client.send_message(@channel, exercise_msg)
 
     Process.send_after(self, :schedule_next, 5 * 1000 )
@@ -46,7 +46,7 @@ defmodule FitnessBot.Worker do
   def handle_info(:schedule_next, state) do
     delay = Enum.random(@delay_range)
     delay_msg = "Next lottery is in #{delay} minutes"
-    Logger.debug delay_msg
+    Logger.info delay_msg
     @slackbot_client.send_message(@channel, delay_msg)
 
     Process.send_after(self, :call_out, delay * 60 * 1000 )
