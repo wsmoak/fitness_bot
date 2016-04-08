@@ -15,8 +15,7 @@ defmodule FitnessBot.SlackClient do
   end
 
   def get_user_name_by_user_id(user_id) do
-    response = get_user_info(user_id)
-    get_user_name(response)
+    user_id |> get_user_info |> get_user_name
   end
 
   def list_channels() do
