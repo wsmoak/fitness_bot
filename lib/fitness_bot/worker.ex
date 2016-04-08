@@ -5,7 +5,7 @@ defmodule FitnessBot.Worker do
   @slack_client Application.get_env(:fitness_bot, :slack_client)
   @slackbot_client Application.get_env(:fitness_bot, :slackbot_client)
 
-  @delay_range 20..30
+  @delay_range 30..45
 
   @channel "fitness"
 
