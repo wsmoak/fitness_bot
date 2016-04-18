@@ -15,7 +15,7 @@ defmodule FitnessBot.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :httpoison],
+    [applications: [:logger, :httpoison, :timex],
      mod: {FitnessBot, []}]
   end
 
@@ -34,7 +34,8 @@ defmodule FitnessBot.Mixfile do
   defp deps do
     [
       {:httpoison, "~> 0.8.0"},
-      {:poison, "~> 2.0"}
+      {:poison, "~> 2.0"},
+      {:timex, "~> 2.1"}
     ]
   end
 end

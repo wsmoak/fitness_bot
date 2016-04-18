@@ -1,6 +1,7 @@
 defmodule FitnessBot.Worker do
   require Logger
   use GenServer
+  use Timex
 
   @slack_client Application.get_env(:fitness_bot, :slack_client)
   @slackbot_client Application.get_env(:fitness_bot, :slackbot_client)
@@ -9,7 +10,10 @@ defmodule FitnessBot.Worker do
 
   @channel "fitness"
 
-  @exercises ["10 PUSHUPS", "60 SECOND WALL SIT", "20 JUMPING JACKS", "20 CRUNCHES", "30 SECOND PLANK", "15 AIR SQUATS"]
+  @exercises ["10 PUSHUPS", "45 SECOND WALL SIT", "20 JUMPING JACKS", "20 CRUNCHES", "30 SECOND PLANK", "15 SQUATS"]
+
+  @active_days 1..5 # Monday to Friday
+  @active_hours 10..15 # 10:00 AM to 3:59 PM
 
   ## Client API
 
@@ -20,7 +24,7 @@ defmodule FitnessBot.Worker do
   ## Server Callbacks
 
   def init(:ok) do
-    Process.send_after(self, :call_out, 5 * 1000)
+    Process.send_after(self, :schedule_next, 5 * 1000)
     {:ok, %{} }
   end
 
@@ -45,12 +49,23 @@ defmodule FitnessBot.Worker do
 
   def handle_info(:schedule_next, state) do
     delay = Enum.random(@delay_range)
+    next_time = DateTime.now("America/New_York") |> Timex.shift(minutes: delay)
+    next_day = Timex.weekday next_time
+    next_hour = next_time.hour
+    schedule_next(delay,next_day,next_hour)
+    {:noreply, state}
+  end
+
+  defp schedule_next(delay,day,hour) when day in @active_days and hour in @active_hours do
     delay_msg = "Next lottery is in #{delay} minutes"
     Logger.info delay_msg
     @slackbot_client.send_message(@channel, delay_msg)
-
     Process.send_after(self, :call_out, delay * 60 * 1000 )
-    {:noreply, state}
+  end
+
+  defp schedule_next(delay,_,_) do
+    Logger.info "Not within active days and times... re-scheduling in #{delay} minutes"
+    Process.send_after(self, :schedule_next, delay * 60 * 1000 )
   end
 
 end
