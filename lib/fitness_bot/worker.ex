@@ -25,14 +25,16 @@ defmodule FitnessBot.Worker do
 
   def init(:ok) do
     Process.send_after(self, :schedule_next, 5 * 1000)
-    {:ok, %{} }
+    {:ok, %{last_user: nil} }
   end
 
   def handle_info(:call_out, state) do
     members = @slack_client.get_members_by_channel_name(@channel)
+    members = Enum.filter(members,fn x -> x != state.last_user end)
     member_count = Enum.count(members)
     member_selection = Enum.random(0..member_count-1)
     user_id = Enum.at( members, member_selection )
+    state = Map.put(state, :last_user, user_id)
     user_name = @slack_client.get_user_name_by_user_id(user_id)
 
     exercise_count = Enum.count(@exercises)
