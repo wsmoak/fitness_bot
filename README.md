@@ -16,6 +16,7 @@ clone the git repo
 
 configure environment variables or modify config/prod.exs
 
+MIX_ENV=prod mix compile
 MIX_ENV=prod iex -S mix
 
 ## Environments
